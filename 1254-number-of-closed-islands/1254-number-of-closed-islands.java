@@ -1,6 +1,16 @@
 class Solution {
     int[][] dir = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     // set flag here. boolean flag = true and change to void dfs
+    /*
+     if(grid[i][j]==0)
+            {
+                dfs(grid,i,j);
+                
+                //check if 0 isn't border/connected to border
+                if(flag)
+                    ans+=1;
+                flag = true;
+            } */
     public int closedIsland(int[][] grid) {
         int res = 0;
         for(int i = 0; i < grid.length; i++){
