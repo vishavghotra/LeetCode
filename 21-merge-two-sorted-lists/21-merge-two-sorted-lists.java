@@ -16,6 +16,7 @@ class Solution {
       return list1;
     ListNode head = new ListNode(0);
     ListNode cursor = head;
+        // should use && in this condition and add only one condition after loop
     while (list1 != null || list2 != null) {
       if (list1 == null) {
         cursor.next = list2;
