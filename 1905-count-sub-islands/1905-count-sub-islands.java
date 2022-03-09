@@ -1,4 +1,5 @@
 class Solution {
+    int[][] directions = {{1,0},{0,1},{0,-1},{-1,0}};
    public int countSubIslands(int[][] grid1, int[][] grid2) {
     int result = 0;
 for(int i = 0; i< grid1.length; i++) {
@@ -21,11 +22,9 @@ return true;
 if(grid1[i][j] == 0)
 return false;
 grid2[i][j] = 0;
-  boolean left = isSubIsland(grid1, grid2, i, j -1);
-        boolean right = isSubIsland(grid1, grid2, i, j +1);
-        boolean top = isSubIsland(grid1, grid2, i-1, j);
-        boolean bottom = isSubIsland(grid1, grid2, i+1, j);
-        if(left && right && top && bottom) return true;
-        return false;
+ boolean res = true;
+      for(int[] dir : directions)
+          res = res & isSubIsland(grid1, grid2, i+dir[0], j+dir[1]);
+      return res;
   }
 }
