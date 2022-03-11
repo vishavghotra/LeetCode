@@ -1,5 +1,6 @@
 class Solution {
     // look for dfs as well!!!!!
+    // difference between dfs hier and dfs in rotten oranges is that rooten oranges we need to set all 1 to 2 but in this case some 1 cannot be converted to 2 because they are near 0 . dfs(matrix[x][y] < val ) does not work here.We need to differntiate two 1s.
     public int[][] updateMatrix(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
