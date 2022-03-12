@@ -1,6 +1,7 @@
 class Solution {
     public int maxProfit(int[] prices) {
         // see first answer kedane's algo
+        // different from part 2 because 2 requires full profit, not max difference from any two days
         
         int max = Integer.MIN_VALUE;
         int intermax  = 0;
