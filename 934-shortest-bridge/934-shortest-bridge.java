@@ -1,53 +1,48 @@
 class Solution {
      public int shortestBridge(int[][] A) {
         int m = A.length, n = A[0].length;
-        boolean[][] visited = new boolean[m][n];
-        int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-        Queue<int[]> q = new LinkedList<>();
         boolean found = false;
-        // 1. dfs to find an island, mark it in `visited`
-        for (int i = 0; i < m; i++) {
-            if (found) {
-                break;
-            }
-            for (int j = 0; j < n; j++) {
-                if (A[i][j] == 1) {
-                    dfs(A, visited, q, i, j, dirs);
+        Queue<int[]> queue = new LinkedList<>();
+        int level = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(A[i][j] == 1 && !found) {
+                    dfs(A, i, j, m, n);
                     found = true;
-                    break;
+                }
+                if(found && A[i][j] == 1) {
+                    queue.add(new int[] {i, j});
                 }
             }
         }
-        // 2. bfs to expand this island
-        int step = 0;
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
-                int[] cur = q.poll();
-                for (int[] dir : dirs) {
-                    int i = cur[0] + dir[0];
-                    int j = cur[1] + dir[1];
-                    if (i >= 0 && j >= 0 && i < m && j < n && !visited[i][j]) {
-                        if (A[i][j] == 1) {
-                            return step;
-                        }
-                        q.offer(new int[]{i, j});
-                        visited[i][j] = true;
+        int[][] d = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            for(int s = 0; s < size; s++) {
+                int[] pos = queue.poll();
+                for(int i = 0; i < 4; i++) {
+                    int x = pos[0] + d[i][0];
+                    int y = pos[1] + d[i][1];
+                    if(x < 0 || x >= m || y < 0 || y >= n) continue;
+                    if(A[x][y] == 2) return level;
+                    else if(A[x][y] == 1) continue;
+                    else if(A[x][y] == 0) {
+                        A[x][y] = 1;
+                        queue.add(new int[]{x, y});
                     }
                 }
             }
-            step++;
+            level++;
         }
         return -1;
+        
     }
-    private void dfs(int[][] A, boolean[][] visited, Queue<int[]> q, int i, int j, int[][] dirs) {
-        if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
-            return;
-        }
-        visited[i][j] = true;
-        q.offer(new int[]{i, j});
-        for (int[] dir : dirs) {
-            dfs(A, visited, q, i + dir[0], j + dir[1], dirs);
-        }
-    }
+    
+    public void dfs(int[][] A, int i, int j, int m, int n) {
+        A[i][j] = 2;
+        if(i - 1 >= 0 && A[i-1][j] == 1) dfs(A, i - 1, j, m, n);
+        if(i + 1 < m && A[i+1][j] == 1) dfs(A, i + 1, j, m, n);
+        if(j - 1 >= 0 && A[i][j - 1] == 1) dfs(A, i, j - 1, m, n);
+        if(j + 1 < n && A[i][j + 1] == 1) dfs(A, i, j + 1, m, n);
+}
 }
