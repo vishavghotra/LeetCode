@@ -24,7 +24,7 @@ class Solution {
 		
 		  {
 			 for(int i=0;i<visited.length;i++) {
-				 if(isConnected[y][i]==1 && visited[i]==false && y!=i)
+				 if(isConnected[y][i]==1 && visited[i]==false )
 					 dfs(isConnected,visited,y,i);
 				 
 			 }
