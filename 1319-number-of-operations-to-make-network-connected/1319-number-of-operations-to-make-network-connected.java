@@ -1,21 +1,43 @@
 class Solution {
     public int makeConnected(int n, int[][] connections) {
-        if (connections.length < n - 1) return -1; // To connect all nodes need at least n-1 edges
-        List<Integer>[] graph = new List[n];
-        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
-        for (int[] c : connections) {
-            graph[c[0]].add(c[1]);
-           graph[c[1]].add(c[0]);
+       if(connections.length  < n -1) return -1;
+    List<List<Integer>> list = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      list.add(new ArrayList<>());
+    }
+    for (int[] conn : connections) {
+      list.get(conn[0]).add(conn[1]);
+      list.get(conn[1]).add(conn[0]);
+    }
+
+    boolean[] visited = new boolean[n];
+    int components = 0;
+    for (int i = 0; i < n; i++)
+      components += bfs(list, visited, i);
+    return (components == 0)?-1: components - 1;
+
+  }
+
+  public int bfs(List<List<Integer>> list, boolean[] visited, int i) {
+    if (visited[i])
+      return 0;
+
+    Queue<Integer> queue = new LinkedList<>();
+    queue.offer(i);
+   visited[i] = true;
+    while (!queue.isEmpty()) {
+      int number = queue.poll();
+     
+      for (int u : list.get(number)) {
+        if (visited[u])
+          continue;
+        else {
+          queue.offer(u);
+          visited[u] = true;
         }
-        int components = 0;
-        boolean[] visited = new boolean[n];
-        for (int v = 0; v < n; v++) components += dfs(v, graph, visited);
-        return components - 1; // Need (components-1) cables to connect components together
+      }
     }
-    int dfs(int u, List<Integer>[] graph, boolean[] visited) {
-        if (visited[u]) return 0;
-        visited[u] = true;
-        for (int v : graph[u]) dfs(v, graph, visited);
-        return 1;
-    }
+    return 1;
+
+  }
 }
