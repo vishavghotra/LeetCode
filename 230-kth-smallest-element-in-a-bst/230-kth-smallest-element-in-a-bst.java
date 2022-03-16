@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    int order = 1;
+    int order = 0;
     int value = 0;
  public int kthSmallest(TreeNode root, int k) {
 if(root == null) {
@@ -34,12 +34,13 @@ if(root.left != null)  {
 smallest(root.left, k);
 
 }
+     order++;
 if(order == k) {
   value = root.val;
-    order++;
+  
     return;
 }
-order++;
+
 if(root.right != null) {
   smallest(root.right, k);
 }
