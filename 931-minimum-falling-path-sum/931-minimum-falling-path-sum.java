@@ -2,9 +2,9 @@ class Solution {
     public int minFallingPathSum(int[][] matrix) {
         int[][] dp = new int[matrix.length][matrix[0].length];
         dp[matrix.length-1] = matrix[matrix.length -1];
-        for(int i = 0; i < matrix.length; i++) {
+       /* for(int i = 0; i < matrix.length; i++) {
             dp[matrix.length -1 ][i] = matrix[matrix.length - 1][i];
-        }
+        } */
         for(int i = matrix.length -2; i >=0 ; i-- ) {
 for(int j = 0; j< matrix[0].length; j++) {
     if(j == 0) {
