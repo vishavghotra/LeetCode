@@ -18,7 +18,7 @@ for(int j = 0; j< matrix[0].length; j++) {
     else {
         dp[i][j] = matrix[i][j] + Math.min(dp[i+1][j],Math.min(dp[i+1][j-1], dp[i+1][j+1]));
     }
-    System.out.println(dp[i][j]);
+  
     
 }
         
