@@ -1,33 +1,23 @@
 class Solution {
      public String frequencySort(String s) {
-    List<Character>[] bucket = new List[s.length() + 1];
-    Map<Character, Integer> map = new HashMap<>();
-    for (char c : s.toCharArray()) {
-      map.put(c, map.getOrDefault(c, 0) + 1);
-    }
-    for (char c : map.keySet()) {
-      int frequency = map.get(c);
-      if (bucket[frequency] == null) {
-        bucket[frequency] = new ArrayList<>();
-      }
-      bucket[frequency].add(c);
-
-    }
-    String result = "";
-    for (int i = s.length(); i >= 1; i--) {
-      if (bucket[i] != null) {
-        for (int j = 0; j < bucket[i].size(); j++) {
-          int k = 0;
-          while (k != i) {
-            result += bucket[i].get(j);
-            k++;
-          }
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) 
+            map.put(c, map.getOrDefault(c, 0) + 1);
+						
+        List<Character> [] bucket = new List[s.length() + 1];
+        for (char key : map.keySet()) {
+            int frequency = map.get(key);
+            if (bucket[frequency] == null) bucket[frequency] = new ArrayList<>();
+            bucket[frequency].add(key);
         }
-      }
+				
+        StringBuilder sb = new StringBuilder();
+        for (int pos = bucket.length - 1; pos >= 0; pos--)
+            if (bucket[pos] != null)
+                for (char c : bucket[pos])
+                    for (int i = 0; i < pos; i++)
+                        sb.append(c);
 
+        return sb.toString();
     }
-    return result;
-
-  }
-
 }
