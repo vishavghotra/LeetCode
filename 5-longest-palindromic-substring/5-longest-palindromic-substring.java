@@ -1,4 +1,5 @@
 class Solution {
+    // use other approach with constant space
   public String longestPalindrome(String s) {
   int n = s.length();
 
