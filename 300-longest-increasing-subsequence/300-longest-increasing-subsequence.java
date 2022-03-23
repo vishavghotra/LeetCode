@@ -1,5 +1,6 @@
 class Solution {
    public int lengthOfLIS(int[] nums) {
+       // use this binary search temlplate
     int[] tails = new int[nums.length];
     int size = 0;
     for (int x : nums) {
