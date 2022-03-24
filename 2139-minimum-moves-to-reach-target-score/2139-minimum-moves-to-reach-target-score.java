@@ -3,12 +3,13 @@ class Solution {
         int res = 0;
         while (target > 1 && k > 0) {  
             if(target % 2 == 0) {
-                res += 1;
+                target /= 2;
+                 k--;
             }
-            else res += 2;
+            else target--;
            
-            k--;
-            target >>= 1;
+           
+            res++;
         }
         return target - 1 + res;
     }
