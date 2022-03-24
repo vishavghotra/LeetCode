@@ -1,8 +1,12 @@
 class Solution {
      public int minMoves(int target, int k) {
         int res = 0;
-        while (target > 1 && k > 0) {   
-            res += 1 + target % 2;
+        while (target > 1 && k > 0) {  
+            if(target % 2 == 0) {
+                res += 1;
+            }
+            else res += 2;
+           
             k--;
             target >>= 1;
         }
