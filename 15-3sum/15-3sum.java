@@ -9,8 +9,8 @@ class Solution {
             while (lo < hi) {
                 if (num[lo] + num[hi] == sum) {
                     res.add(Arrays.asList(num[i], num[lo], num[hi]));
-                    while (lo < hi && num[lo] == num[lo+1]) lo++;
-                    while (hi > lo && num[hi] == num[hi-1]) hi--;
+                    while (lo < num.length - 1 && num[lo] == num[lo+1]) lo++;
+                    while (hi > 0 && num[hi] == num[hi-1]) hi--;
                     lo++; hi--;
                 } else if (num[lo] + num[hi] < sum) lo++;
                 else hi--;
