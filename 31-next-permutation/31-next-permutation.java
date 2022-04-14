@@ -11,7 +11,7 @@ class Solution {
       int max = last + 1;
 
       for (int i = last + 1; i < nums.length; i++) {
-        if (nums[i] > nums[last] && nums[i] <= nums[max]) {
+        if (nums[i] > nums[last]  /*nums[i] <= nums[max]*/) {
           max = i;
         }
       }
