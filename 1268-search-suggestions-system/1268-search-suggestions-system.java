@@ -1,6 +1,6 @@
 class Solution {
      class TrieNode {
-    Map<Character, TrieNode> map;
+    Map<Character, TrieNode> map;  // use TrieNode[] array with -'a'
     List<String> words;
 
     public TrieNode() {
