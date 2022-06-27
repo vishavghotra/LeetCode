@@ -1,36 +1,34 @@
 class Solution {
-     public  int findKthLargest(int[] nums, int k) {
-    return partition(nums, 0, nums.length - 1, nums.length - k);
-
+     public int findKthLargest(int[] nums, int k) {
+    return partition(0, nums.length - 1, nums, nums.length - k);
   }
 
-  public  int partition(int[] nums, int start, int end, int k) {
-    int replace = start;
-    int right = end;
-    int pivot = nums[start];
-    while (start <= end) {
-      while (start <= end && nums[start] <= pivot)
-        start++;
-      while (start <= end && nums[end] > pivot)
-        end--;
-      if (start > end)
-        break;
-      int temp = nums[end];
-      nums[end] = nums[start];
-      nums[start] = temp;
+  public int partition(int start, int end, int[] nums, int k) {
+    if (start > end)
+      return Integer.MAX_VALUE;
+    int pivot = nums[end];
+    int left = start;
+    for (int i = start; i < end; i++) {
+      if (nums[i] < pivot)
+        exch(nums, left++, i);
 
     }
-
-    int temp = nums[end];
-    nums[end] = pivot;
-    nums[replace] = temp;
-    if (k == end)
-      return nums[end];
-    else if (k > end) {
-      return partition(nums, end + 1, right, k);
-    } else
-      return partition(nums, replace, end - 1, k);
+    exch(nums, left, end );
+    if (left == k)
+      return nums[left];
+    else if (left < k)
+      return partition(left + 1, end, nums, k);
+    else
+      return partition(start, left - 1 , nums, k);
 
   }
+
+  public void exch(int[] nums, int i, int j) {
+    int ex = nums[i];
+    nums[i] = nums[j];
+    nums[j] = ex;
+
+  }
+
 
 }
