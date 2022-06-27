@@ -1,6 +1,6 @@
 class Solution {
     public int furthestBuilding(int[] heights, int bricks, int ladders) {
-         Queue<Integer> queue = new PriorityQueue<>();
+         Queue<Integer> queue = new PriorityQueue<>();  // MINIMUM WITH POLL()!!!!
     int result = 0;
     for (; result < heights.length - 1; result++) {
 
