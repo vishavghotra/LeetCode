@@ -24,6 +24,7 @@ class Solution {
     }
     
     /*
+    SEE LEE SOLUTION AND MADNO COMMENT : MIN HEAP: LADDERS FIRST, THEN POP LOWEST FROM HEAP TO ADD WITH BRICKS(LOWEST BRICKS POSSIBLE) ; MAX HEAP: BRICKS FIRST
     
     PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
 
