@@ -6,6 +6,7 @@ class Solution {
         //if we move all 3, 7, 4 to 5, total = 4 steps
         // if we move only 3, 7 to 4 total = 4 steps
         // REASON : steps(3,5) = steps(3,4) + steps(4,5). One elements steps reduces in (2) which is added to median in (1)
+        // read other articles
 	Arrays.sort(nums);
 	int operations = 0, mid = nums[nums.length/2];   //
 	for (int num: nums) operations += Math.abs(mid - num);
