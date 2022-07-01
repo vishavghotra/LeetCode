@@ -7,6 +7,12 @@ class Solution {
         // if we move only 3, 7 to 4 total = 4 steps
         // REASON : steps(3,5) = steps(3,4) + steps(4,5). One elements steps reduces in (2) which is added to median in (1)
         // read other articles
+        
+        
+        
+        // finding median using quickselect: for odd median is index: num.length/2
+        // for even: median is (nums.length-1/2 + nums.length/2)2 but steps are still same as difference of both
+        // for example median in 0, 10 is 5 total: abs(0-5) + (10- 5) = 10 - 0 = 10;
 	Arrays.sort(nums);
 	int operations = 0, mid = nums[nums.length/2];   //
 	for (int num: nums) operations += Math.abs(mid - num);
