@@ -1,6 +1,6 @@
 class Solution {
     public int numDecodings(String s) {
-              if (s == null || s.length() == 0) {
+            /*  if (s == null || s.length() == 0) {
             return 0;
         }
         int n = s.length();
@@ -17,6 +17,30 @@ class Solution {
                 dp[i] += dp[i-2];
             }
         }
-        return dp[n];
+        return dp[n];  */
+        
+         if (s.charAt(0) == '0')
+      return 0;
+    int prev = 1;
+    int pprev = 1;
+
+    for (int i = 1; i < s.length(); i++) {
+      if (s.charAt(i) == '0') { 
+        
+        prev = 0;    //dp[i-1] not added only dp[i-2] weiter
+          
+      }
+      if (s.charAt(i - 1) == '1' || (s.charAt(i - 1) == '2' && s.charAt(i) < '7')) {
+        prev += pprev;
+        pprev = prev - pprev;   //calculate last prev from new prev to assign to pprev 
+      } else
+        pprev = prev;
+
+    }
+    return prev;
+        
+       
+        
+        
     }
 }
