@@ -3,6 +3,7 @@ class Solution {
     Deque<Integer> dq = new ArrayDeque<>();
     dq.push(0);
     for (int i = 1; i < nums.length; i++) {
+        // see maximum sliding window sum: 239
          while (!dq.isEmpty() && i - dq.peekFirst() > k)
         dq.pollFirst();
       nums[i] += nums[dq.peekFirst()];
