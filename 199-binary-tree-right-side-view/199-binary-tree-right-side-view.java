@@ -14,9 +14,9 @@
  * }
  */
 class Solution {
-     public List<Integer> rightSideView(TreeNode root) {
+    public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<Integer>();
-        rightView(root, result, 0);
+        rightView(root, result, 1);
         return result;
     }
     
@@ -24,7 +24,7 @@ class Solution {
         if(curr == null){
             return;
         }
-        if(currDepth == result.size()){
+        if(currDepth > result.size()){
             result.add(curr.val);
         }
         
