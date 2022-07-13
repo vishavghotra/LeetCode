@@ -1,35 +1,39 @@
 class Solution {
-    public boolean canPartitionKSubsets(int[] nums, int k) {
+     public boolean canPartitionKSubsets(int[] nums, int k) {
+	if (k > nums.length) return false;
 	int sum = 0;
-	for(int num: nums)
-		sum += num;
-
-	if(sum % k != 0)
-		return false;
-
+	for (int i : nums) sum += i;
+	// basic logic test
+	if (sum % k != 0) return false;
 	Arrays.sort(nums);
 
-	return dfs(nums, new int[k], k, nums.length - 1, sum / k);
+	return dfs(nums, new boolean[nums.length], k, 0, sum / k, nums.length - 1);
 }
 
-public boolean dfs(int[] nums, int[] sums, int k, int index, int target) {
-	if(index < 0)
-		return true;
+private boolean dfs(int[] nums, boolean[] visited, int k, int currentSum, int targetSum, int position) {
+	// if k is 0, for sure nothing will be left unvisited! this is conclusion from simple math.
+	if (k == 0) return true;
 
-	Set<Integer> seen = new HashSet<>();
+	// begin next sum search. Critical point: start search from nums.length - 1, not position!!!
+	if (currentSum == targetSum) return dfs(nums, visited, k - 1, 0, targetSum, nums.length - 1);
 
-	for(int i = 0; i < k; i++) {
-		if(sums[i] + nums[index] > target || !seen.add(sums[i]))
-			continue;
+	for (int i = position; i >= 0; i--) {
+		// Skip logic 1: 
+		// Of course you cannot visit what's already visited.
+		if (visited[i]) continue;
+		// Skip logic 2:
+		// if the last position (i + 1) is not visited, that means it does not work for current combination, 
+		// and of course this position (i) has same value, it won't work as well, skip it.
+		if (i + 1 < nums.length && nums[i] == nums[i + 1] && !visited[i + 1]) continue;
+		// Skip logic 3:
+		// No need to explain, just out of range case.
+		if (currentSum + nums[i] > targetSum) continue;
 
-		sums[i] += nums[index];
-
-		if(dfs(nums, sums, k, index - 1, target))
-			return true;
-
-		sums[i] -= nums[index];
+		// simple recursion and backtracking
+		visited[i] = true;
+		if (dfs(nums, visited, k, currentSum + nums[i], targetSum, i - 1)) return true;
+		visited[i] = false;
 	}
-
 	return false;
 }
 }
