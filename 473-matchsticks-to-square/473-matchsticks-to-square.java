@@ -1,6 +1,6 @@
 class Solution {
     public boolean makesquare(int[] nums) {
-        
+     // see 698 my submission   
     if (nums == null || nums.length < 4) return false;
         int sum = 0;
         for (int num : nums) sum += num;
