@@ -63,7 +63,8 @@ private boolean dfs(int[] nums, boolean[] visited, int k, int currentSum, int ta
       if (sum[i] + nums[index] > target) {
         continue;
       }
-
+      // already checked from sum[j] (j<i) ? if(sum[i] == sum[j]): already checked with sum[j] 
+        // and it returned false that's why we don't need to check again
       int j = i - 1;
       while (j >= 0) {
         if (sum[i] == sum[j])
