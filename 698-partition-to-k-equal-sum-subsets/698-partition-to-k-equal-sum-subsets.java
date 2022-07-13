@@ -1,5 +1,5 @@
 class Solution {
-     public boolean canPartitionKSubsets(int[] nums, int k) {
+   /*  public boolean canPartitionKSubsets(int[] nums, int k) {
 	if (k > nums.length) return false;
 	int sum = 0;
 	for (int i : nums) sum += i;
@@ -36,4 +36,50 @@ private boolean dfs(int[] nums, boolean[] visited, int k, int currentSum, int ta
 	}
 	return false;
 }
+
+*/
+    
+    
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+    int sum = 0;
+    for (int num : nums)
+      sum += num;
+    if (sum % k != 0)
+      return false;
+    Arrays.sort(nums);
+    return can(nums, new int[k], nums.length - 1, k, sum / k);
+
+  }
+
+  public boolean can(int[] nums, int[] sum, int index, int k, int target) {
+    if (index == -1) {
+      for (int num : sum) {
+        if (num != target)
+          return false;
+      }
+      return true;
+    }
+    for (int i = 0; i < k; i++) {
+      if (sum[i] + nums[index] > target) {
+        continue;
+      }
+
+      int j = i - 1;
+      while (j >= 0) {
+        if (sum[i] == sum[j])
+          break;
+        else
+          j--;
+      }
+      if (j != -1)
+        continue;
+      sum[i] += nums[index];
+      if (can(nums, sum, index - 1, k, target))
+        return true;
+      sum[i] -= nums[index];
+
+    }
+    return false;
+
+  }
 }
