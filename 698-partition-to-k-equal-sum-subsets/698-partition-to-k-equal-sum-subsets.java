@@ -12,7 +12,7 @@ class Solution {
 
 private boolean dfs(int[] nums, boolean[] visited, int k, int currentSum, int targetSum, int position) {
 	// if k is 0, for sure nothing will be left unvisited! this is conclusion from simple math.
-	if (k == 0) return true;
+	if (k == 1) return true;
 
 	// begin next sum search. Critical point: start search from nums.length - 1, not position!!!
 	if (currentSum == targetSum) return dfs(nums, visited, k - 1, 0, targetSum, nums.length - 1);
