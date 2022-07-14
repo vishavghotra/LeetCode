@@ -14,7 +14,34 @@
  * }
  */
 class Solution {
-  public TreeNode buildTree(int[] preorder, int[] inorder) {
+     public TreeNode buildTree(int[] preorder, int[] inorder) {
+    TreeNode result = new TreeNode();
+    return helper(preorder, inorder, 0, 0, inorder.length - 1);
+  }
+
+  public TreeNode helper(int[] preorder, int[] inorder, int pstart, int istart, int iend) {
+    if (istart > iend)
+      return null;
+    if (pstart >= preorder.length || istart >= preorder.length)
+      return null;
+    int point = istart;
+    TreeNode root = new TreeNode(preorder[pstart]);
+    for (int i = istart; i < inorder.length; i++) {
+      if (inorder[i] == preorder[pstart]) {
+        point = i;
+        break;
+      }
+    }
+      
+      root.left = helper(preorder, inorder, pstart + 1, istart, point - 1);
+    root.right = helper(preorder, inorder, pstart + point - istart + 1, point + 1, iend);
+    return root;
+      
+  }
+    
+    
+    
+  /*public TreeNode buildTree(int[] preorder, int[] inorder) {
     return helper(0, 0, inorder.length - 1, preorder, inorder);
 }
 
@@ -32,5 +59,5 @@ public TreeNode helper(int preStart, int inStart, int inEnd, int[] preorder, int
     root.left = helper(preStart + 1, inStart, inIndex - 1, preorder, inorder);
     root.right = helper(preStart + inIndex - inStart + 1, inIndex + 1, inEnd, preorder, inorder);
     return root;
-}
+}  */
 }
