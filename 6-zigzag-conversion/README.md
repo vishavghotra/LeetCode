@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/zigzag-conversion/">6. Zigzag Conversion</a></h2><h3>Medium</h3><hr><div><p>The string <code>"PAYPALISHIRING"</code> is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+<h2><a href="https://leetcode.com/problems/zigzag-conversion/solution/">6. Zigzag Conversion</a></h2><h3>Medium</h3><hr><div><p>The string <code>"PAYPALISHIRING"</code> is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
 
 <pre>P   A   H   N
 A P L S I I G
