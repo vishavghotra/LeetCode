@@ -10,7 +10,7 @@ class Solution {
                 counter.clear();
                 counter.put(0, 1);
                 int cur = 0;
-                for (int k = 0; k < m; k++) {
+                for (int k = 0; k < m; k++) { // subarray with sum k applied here!
                     cur += A[k][j] - (i > 0 ? A[k][i - 1] : 0);
                     res += counter.getOrDefault(cur - target, 0);
                     counter.put(cur, counter.getOrDefault(cur, 0) + 1);
