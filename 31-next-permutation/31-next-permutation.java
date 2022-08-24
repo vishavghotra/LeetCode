@@ -1,38 +1,41 @@
 class Solution {
-     public void nextPermutation(int[] nums) {
-    int last = nums.length - 1;
-    while (last > 0 && nums[last] <= nums[last - 1])
-      last--;
-    if (last == 0) {
-      reverse(nums, 0);
-      return;
-    } else {
-      last--;
-      int max = last + 1;
+     public void swap(int[] nums, int i, int j) {
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
 
-      for (int i = last + 1; i < nums.length; i++) {
-        if (nums[i] > nums[last]  /*nums[i] <= nums[max]*/) {
-          max = i;
-        }
-      }
-      int swap = nums[max];
-      nums[max] = nums[last];
-      nums[last] = swap;
-      reverse(nums, last + 1);
-      return;
+  }
+
+  public void reverseSort(int[] nums, int index) {
+    int low = index;
+    int high = nums.length - 1;
+    while (low < high) {
+      swap(nums, low, high);
+      low++;
+      high--;
+
     }
 
   }
 
-  public void reverse(int[] nums, int start) {
-    int end = nums.length - 1;
-    int replace = 0;
-    while (start < end) {
-      replace = nums[start];
-      nums[start++] = nums[end];
-      nums[end--] = replace;
-
+  public void nextPermutation(int[] nums) {
+    int n = nums.length - 1;
+    int index = n;
+    while (index > 0) {
+      if (nums[index - 1] < nums[index])
+        break;
+      index--;
     }
-
+    index--;
+    if (index == -1) {
+      reverseSort(nums, 0);
+      return;
+    }
+    int pointer = index + 1;
+    while (pointer <= n && nums[pointer] > nums[index])
+      pointer++;
+    pointer--;
+    swap(nums, pointer, index);
+    reverseSort(nums, index + 1);
   }
 }
