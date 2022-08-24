@@ -1,16 +1,11 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        // see first answer kedane's algo
-        // different from part 2 because 2 requires full profit, not max difference from any two days
-        
-        int max = Integer.MIN_VALUE;
-        int intermax  = 0;
+        int max = 0;
+        int curr  = 0;
         for(int i = 1; i< prices.length; i++) {
-            intermax = Math.max(intermax + prices[i] - prices[i-1], 0) ;
-            max= Math.max(max, intermax);
-            
+            curr = Math.max(0, curr + prices[i] - prices[i - 1]);
+            max = Math.max(curr, max);
         }
-        return (max <= 0)?0:max;
-     
+        return max;
     }
 }
