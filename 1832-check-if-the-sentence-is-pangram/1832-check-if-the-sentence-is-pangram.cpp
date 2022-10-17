@@ -2,17 +2,10 @@ class Solution {
 public:
      bool checkIfPangram(string sentence)
     {
-        bool check[26];
-         for(int i = 0; i < 26; i++) check[i] = false;
-        for (int i = 0; i < sentence.length(); i++)
-        {
-            check[sentence[i] - 'a'] = true;
+       int seen  = 0;
+        for(int i = 0; i < sentence.length(); i++) {
+            seen = seen | (1 << (sentence[i] - 'a'));
         }
-        for (int i = 0; i < 26; i++)
-        {
-            if (check[i] == false)
-                return false;
-        }
-        return true;
+        return seen == (1 << 26) - 1;
     }
 };
