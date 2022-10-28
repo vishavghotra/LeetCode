@@ -13,10 +13,6 @@ public:
     {
         if (x >= grid.size())
             return y;
-        if (y >= grid[0].size())
-            return -1;
-        if (y < 0)
-            return -1;
         if (grid[x][y] == 1 && (y == grid[0].size() - 1 || grid[x][y + 1] != 1))
             return -1;
         if (grid[x][y] == -1 && (y == 0 || grid[x][y - 1] != -1))
