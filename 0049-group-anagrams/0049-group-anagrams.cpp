@@ -25,12 +25,7 @@ public:
         string result;
         for (int i = 0; i < 26; i++)
         {
-            if (counter[i] > 0)
-            {
-
-                result += (('a' + i));
-                result+=  to_string(counter[i]);
-            }
+            result.push_back(counter[i]);
         }
         return result;
     }
