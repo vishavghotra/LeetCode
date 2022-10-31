@@ -4,44 +4,41 @@ public:
   
     int shortestPath(vector<vector<int>> &grid, int k)
     {
-       // At a particular cell we will store the number of obstacles that we can still remove after walking through that cell
-        vector<vector<int>> vis(grid.size(),vector<int>(grid[0].size(),-1));
-        queue<vector<int>> q;
-		
-		// queue stores (x,y,current path length,number of obstacles we can still remove)
-        q.push({0,0,0,k});
-        while(!q.empty()){
-            auto t=q.front();
-            int x=t[0],y=t[1];
-            q.pop();
-			
-			// Exit if current position is outside of the grid
-            if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size()){
-                continue;
-            }
-			
-			// Destination found
-            if(x==grid.size()-1 && y==grid[0].size()-1)
-                return t[2];
+     int rows=grid.size(), cols=grid[0].size();
+        int minSteps = max(0,rows+cols-2), obstacles=minSteps-1, minStepsNextRound=minSteps;
+        if(obstacles<=k) return minSteps; // take a shortcut if we can afford it; obstacles only used here!!!!!!! minsteps: max for a corner case;
 
-            if(grid[x][y]==1){
-                if(t[3]>0) // If we encounter an obstacle and we can remove it
-                    t[3]--;
-                else
-                    continue;
+        vector<vector<int>> dirs = {{1,0},{0,1},{-1,0},{0,-1}};
+        list<vector<int>> togo; togo.push_back({0,0,k}); // BFS: {row, col, remaining k}
+        vector<int> visited(rows*cols, -1); // position -> k remaining
+        visited[0]=k;
+        int steps=0;
+        
+        while(togo.size()) {
+            steps++;
+			minSteps=minStepsNextRound;
+            for(int sz=togo.size();sz>0;sz--) {
+                int r=togo.front()[0], c=togo.front()[1], k=togo.front()[2];
+                togo.pop_front();
+                for(auto& d:dirs) {
+                    int rr=r+d[0], cc=c+d[1];
+                    if(rr<0 || rr>=rows || cc<0 || cc>=cols) continue;
+                    int kk = k-grid[rr][cc];
+                    if(visited[rr*cols+cc]>=kk) continue; // have been here passing less obstacles
+
+                    // maybe we can take a shortcut and go straight to the goal
+					// but jump only from the point closest to the target
+                    int stepsToTarget = rows-rr-1+cols-cc-1;
+                    if(stepsToTarget<=kk && stepsToTarget==minSteps-1) return steps+stepsToTarget;
+                    //jump if minsteps from the previous iteration!!! stepsToTarget - 1 because the last cell(target) is always empty(along with (0,0)) -> No effect just reduces one iteration. 
+                    
+                    
+                    
+                    togo.push_back({rr,cc,kk});
+                    visited[rr*cols+cc]=kk;
+					minStepsNextRound=min(minStepsNextRound,stepsToTarget);
+                }
             }
-			
-			// The cell was previously visited by some path and we were able to remove more obstacles from the previous path.
-			// Then we don't need to continue on our current path
-            if(vis[x][y]!=-1 && vis[x][y]>=t[3])
-                continue;
-            vis[x][y]=t[3];
-            
-            q.push({x+1,y,t[2]+1,t[3]});
-            q.push({x,y+1,t[2]+1,t[3]});
-            q.push({x-1,y,t[2]+1,t[3]});
-            q.push({x,y-1,t[2]+1,t[3]});
-            
         }
         return -1;
     }
