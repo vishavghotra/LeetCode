@@ -1,42 +1,47 @@
 class Solution {
 public:
      
-   bool visited[40][40][1609];
+  
     int shortestPath(vector<vector<int>> &grid, int k)
     {
-        int m = grid.size();
-        int n = grid[0].size();
-        int steps = 0;
-        queue<vector<int>> queue;
-        queue.push({0, 0, k});
-        while (!queue.empty())
-        {
-            int s = queue.size();
-            for (int i = 0; i < s; i++)
-            {
-                auto p = queue.front();
-                queue.pop();
-                if (p[0] < 0 || p[0] >= m || p[1] >= n || p[1] < 0 || p[2] < 0)
-                    continue;
-                
-                int x = p[0];
-                int y = p[1];
-                int k = p[2];
-                if(visited[x][y][k]) 
-                    continue;
-                if (x == m - 1 && y == n - 1)
-                    return steps;
-                visited[x][y][k] = true;
-                if (grid[x][y] > 0)
-                {
-                    k--;
-                }
-                queue.push({x, y + 1, k});
-                queue.push({x, y - 1, k});
-                queue.push({x + 1, y, k});
-                queue.push({x - 1, y, k});
+       // At a particular cell we will store the number of obstacles that we can still remove after walking through that cell
+        vector<vector<int>> vis(grid.size(),vector<int>(grid[0].size(),-1));
+        queue<vector<int>> q;
+		
+		// queue stores (x,y,current path length,number of obstacles we can still remove)
+        q.push({0,0,0,k});
+        while(!q.empty()){
+            auto t=q.front();
+            int x=t[0],y=t[1];
+            q.pop();
+			
+			// Exit if current position is outside of the grid
+            if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size()){
+                continue;
             }
-            steps++;
+			
+			// Destination found
+            if(x==grid.size()-1 && y==grid[0].size()-1)
+                return t[2];
+
+            if(grid[x][y]==1){
+                if(t[3]>0) // If we encounter an obstacle and we can remove it
+                    t[3]--;
+                else
+                    continue;
+            }
+			
+			// The cell was previously visited by some path and we were able to remove more obstacles from the previous path.
+			// Then we don't need to continue on our current path
+            if(vis[x][y]!=-1 && vis[x][y]>=t[3])
+                continue;
+            vis[x][y]=t[3];
+            
+            q.push({x+1,y,t[2]+1,t[3]});
+            q.push({x,y+1,t[2]+1,t[3]});
+            q.push({x-1,y,t[2]+1,t[3]});
+            q.push({x,y-1,t[2]+1,t[3]});
+            
         }
         return -1;
     }
