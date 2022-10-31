@@ -1,39 +1,43 @@
 class Solution {
 public:
-      int dp[42][42][1609];
-    const static int MAX = 1e7;
-    
-    int shortestPath(vector<vector<int>>& grid, int k) {
-        return help(grid, grid.size() - 1, grid[0].size() - 1, k, k);
-    }
-    
-    int help(vector<vector<int>>& grid, int x, int y, int z, int k){
-        
-        //Reached destination
-        if(x == 0 && y  == 0)return 0;
-        
-        //Already visited/calculated
-        if(dp[x][y][z]) return dp[x][y][z];
-        
-        //Cant remove any more obstacles
-        if(grid[x][y] == 1 && z == 0)return MAX;
-        
-        //Manhattan optimization
-        if(z >= x + y)return dp[x][y][z] = x+y;
-        
-        //Make sure to take direction left and up before right and top
-        vector<vector<int>> dirs = {{-1,0}, {0,-1}, {1,0}, {0,1}};
-        
-        //Setting dp[x][y][z] to MAX so that it does not gets calculated again 
-        dp[x][y][z] = MAX;
-        
-        for(auto dir:dirs){
-            //DFS valid condition
-            if(x + dir[0] >= 0 && x + dir[0] < grid.size() && y + dir[1] >=0 && y + dir[1] < grid[0].size() ){
-                dp[x][y][z] = min(dp[x][y][z], help(grid, x + dir[0], y + dir[1], z - grid[x][y], k) + 1);
+     
+   bool visited[40][40][1609];
+    int shortestPath(vector<vector<int>> &grid, int k)
+    {
+        int m = grid.size();
+        int n = grid[0].size();
+        int steps = 0;
+        queue<vector<int>> queue;
+        queue.push({0, 0, k});
+        while (!queue.empty())
+        {
+            int s = queue.size();
+            for (int i = 0; i < s; i++)
+            {
+                auto p = queue.front();
+                queue.pop();
+                if (p[0] < 0 || p[0] >= m || p[1] >= n || p[1] < 0 || p[2] < 0)
+                    continue;
+                
+                int x = p[0];
+                int y = p[1];
+                int k = p[2];
+                if(visited[x][y][k]) 
+                    continue;
+                if (x == m - 1 && y == n - 1)
+                    return steps;
+                visited[x][y][k] = true;
+                if (grid[x][y] > 0)
+                {
+                    k--;
+                }
+                queue.push({x, y + 1, k});
+                queue.push({x, y - 1, k});
+                queue.push({x + 1, y, k});
+                queue.push({x - 1, y, k});
             }
+            steps++;
         }
-        //If not possible
-        if(z == k && x == grid.size() - 1 && y == grid[0].size() - 1 && dp[x][y][z] == MAX)return -1;
-        return dp[x][y][z];}
+        return -1;
+    }
 };
