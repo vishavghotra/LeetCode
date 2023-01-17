@@ -1,24 +1,19 @@
 class Solution {
 public:
     int minFlipsMonoIncr(string s) {
-        int one = 0;
-    int zero = 0;
-    for (int i = 0; i < s.size(); i++)
+   int flips = 0;
+    int one = 0;
+    for (char c : s)
     {
-      if (s[i] == '0')
-        zero++;
-    }
-    int ans = zero;
-    for (int i = 0; i < s.size(); i++)
-    {
-      if (s[i] == '1')
-        zero++;
+      if (c == '1')
+      {
+        one++;
+      }
       else
       {
-        zero--;
+        flips = min(flips + 1, one);
       }
-      ans = min(ans, zero );
     }
-    return ans;
+    return flips;
     }
 };
