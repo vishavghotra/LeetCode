@@ -11,7 +11,8 @@ public:
     for (int i = 0; i < n; i++)
     {
       sum += nums[i];
-      int index = (sum < 0) ? k - ((-sum % k == 0) ? k: (-sum % k)) : sum % k;
+      int index = sum % k;
+        index = index < 0 ? k + index: index;
 
       
       result += map[index];
