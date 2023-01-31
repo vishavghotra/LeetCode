@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //after sorting sum is maximum sum increasing subsequence
     int bestTeamScore(vector<int>& scores, vector<int>& ages) {
    vector<pair<int,int>> arr; // Create a array of pairs of age & scores
         vector<int> ans ((int)scores.size(), 0); // An array to hold answers of LIS ending at given index-- More formally, Longest Non decreasing Subsequence
