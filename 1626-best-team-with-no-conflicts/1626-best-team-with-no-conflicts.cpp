@@ -21,6 +21,7 @@ public:
                     ans[i] = max(ans[i], ans[j] + arr[i].second);
                 }
             }
+            cout << ans[i] << endl;
             best = max(best, ans[i]);
         }
         
