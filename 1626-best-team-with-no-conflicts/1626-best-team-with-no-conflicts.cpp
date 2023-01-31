@@ -8,7 +8,7 @@ public:
         for(int i=0;i<scores.size();i++) {
             arr.push_back({ages[i], scores[i]});  // Push {age, score} pair in the array
         }
-        sort(arr.begin(), arr.end(), greater<>()); // It is important that age is the first element AND score is the second element  in the pair. This is because in sorting vector of pairs, pair.first is given priority over pair.second
+        sort(arr.begin(), arr.end()); // It is important that age is the first element AND score is the second element  in the pair. This is because in sorting vector of pairs, pair.first is given priority over pair.second
         
         // Note: From here on we dont need age at all! We only access arr[i].second to access scores! 
         int best = 0;   // Store the final answer
@@ -17,7 +17,7 @@ public:
         for(int i=0; i<arr.size();i++) {
             ans[i]=arr[i].second; 
             for(int j=0;j<i;j++) {
-                if(arr[i].second <= arr[j].second) {
+                if(arr[i].second >= arr[j].second) {
                     ans[i] = max(ans[i], ans[j] + arr[i].second);
                 }
             }
